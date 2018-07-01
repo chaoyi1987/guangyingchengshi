@@ -16,7 +16,7 @@ module.exports = {
 
         filename:"common/js/main.js",//新js文件的命名
 
-        publicPath: "/addons/luma_gycs/YXCS/"//所有资源的基础路径，而且一定是 / 结尾
+        publicPath: "/"//所有资源的基础路径，而且一定是 / 结尾
 
     },
     plugins:[//打包时自动生成html
