@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/layer/3.1.0/mobile/need/layer.css">
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/layer/3.1.0/mobile/layer.js"></script>
+    <script>
+        (function (){
+            var pixclPatio = 1/window.devicePixelRatio;
+            document.write('<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />');
+            var html = document.getElementsByTagName('html')[0];
+            var htmlW = html.getBoundingClientRect().width;
+            html.style.fontSize = htmlW /16 + 'px';
+        })();
+    </script>
+    <script>
+
+      $.ajax({
+        type: "POST",
+        url: "http://h5.xmluma.cn/app/index.php?i=23&c=entry&do=share&m=luma_gycs&isajax=false",
+        data: {url:window.location.href},
+        async:false,
+        timeout:5000,
+        xhrFields: {
+          withCredentials: true
+        },
+        dataType: "json",
+        success: function (data) {
+          if(data.code == "1001")
+          {
+            window.location.href="http://h5.xmluma.cn/app/index.php?i=23&c=entry&do=get_user_login&m=luma_gycs&redirect_url="+
+              encodeURIComponent(window.location.href);
+          }
+          else {
+            console.log(data.appid);
+            wx.config({
+              debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+              appId: data.appid, // 必填，公众号的唯一标识
+              timestamp:data.Timestamp, // 必填，生成签名的时间戳
+              nonceStr: data.nonceStr, // 必填，生成签名的随机串
+              signature: data.Signature,// 必填，签名
+              jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
+            });
+            wx.ready(function(){
+              // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+              wx.onMenuShareTimeline({
+                title: '观影成诗', // 分享标题
+                link: 'http://h5.xmluma.cn/addons/luma_gycs/YXCS/index.html', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://h5.xmluma.cn/addons/luma_gycs/shareicon.png', // 分享图标
+
+              });
+              wx.onMenuShareAppMessage({
+                title: '观影成诗', // 分享标题
+                desc: '观一方世界,做一首名诗', // 分享描述
+                link: 'http://h5.xmluma.cn/addons/luma_gycs/YXCS/index.html', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://h5.xmluma.cn/addons/luma_gycs/shareicon.png', // 分享图标
+                type: '', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+              });
+            });
+
+
+          }
+        },
+        error:function(error){
+
+        },
+        complete:function () {
+
+        }
+      });
+
+    </script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.min.js"></script>
+    <script type="text/javascript" src="http://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+
+</head>
+<body>
+<div style="display:none"><script src="https://s19.cnzz.com/z_stat.php?id=1274064449&web_id=1274064449" language="JavaScript"></script></div>
+   <div id="HW">
+
+       <!-- 投票 -->
+       <section id="vote">
+
+            <div class="header">
+
+                <div class="primary-title">
+
+                    <div class="logo"></div>
+
+                    <div class="title">
+
+                        <p align="left"><span>影像成诗</span>-福建华为摄影征集活动</p>
+
+                    </div>
+
+                    <hr />
+
+                </div>
+
+                <div class="nav">
+
+                    <div class="return"></div>
+                    <span>赛区A: 福州</span>
+                    <input id="keyword" type="text" placeholder="请输入关键字" />
+                    <div style="position: absolute;right: 0;top: 0.1rem;font-size: 0.7rem;color: #ffffff" id="searchBtn">搜索</div>
+                </div>
+
+
+            </div>
+           <div class="vote-contain">
+               <div class="vote-list">
+                   <ul class="list-ui"></ul>
+               </div>
+               <div class="detail">
+                   <img src="" alt="" class="detail-img">
+                   <div class="data">
+                       <div class="info">
+                           <p align="left">编号：FZ-001&nbsp;&nbsp;&nbsp;名称：『太阳下山』<br />拍摄机型：HUAWEI P20 <br />作品：刀刀 <br />票数：1票</p>
+                       </div>
+                       <div class="btn-fox">
+                           <button class="btn" style="position: relative">
+                               <span>长按保存</span>
+                               <img src="" class="detail-img" style="position: absolute;top:0;left: 0;width: 100%;height: 100%;opacity: 0">
+                           </button>
+                           <button class="btn vote-btn">投上一票</button>
+                       </div>
+                       <div class="return detail-return"></div>
+                   </div>
+               </div>
+
+               <div class="rank" style="height: 100%;overflow-y: scroll">
+
+                   <span class="rank-lists">票数排行榜</span>
+                    <div style="height: 90%">
+                   <ul class="list">
+
+
+                   </ul>
+                    </div>
+                   <div class="rank-return" ></div>
+               </div>
+           </div>
+
+       </section>
+
+       <!-- 主页 -->
+       <section id="home">
+
+
+
+           <div class="home-logo"></div>
+
+           <!--主页面内容 -->
+
+           <div class="home-contain">
+
+               <div class="title">
+
+                   <p>福建华为摄影征集活动</p>
+
+                   <span>影像成诗</span>
+
+               </div>
+
+               <div class="title_bg"></div>
+
+           </div>
+
+
+           <!-- 主页面按钮 -->
+           <div class="home-btn">
+
+               <button class="home-linkbtn vote"></button>
+               <button class="home-linkbtn rank"></button>
+               <button class="home-linkbtn rules"></button>
+               <button class="home-linkbtn awards"></button>
+
+           </div>
+
+           <div class="mask"></div>
+           <!-- 选择参赛城市列表 -->
+
+           <div class="enter-city">
+
+                <div class="title">请选择参赛作品城市</div>
+
+                <div class="city-list">
+
+                    <button class="city" data-cityid="1">赛区A: 福州</button>
+                    <button class="city" data-cityid="2">赛区D: 厦门</button>
+                    <button class="city" data-cityid="3">赛区G: 三明</button>
+                    <button class="city" data-cityid="4">赛区B: 福州</button>
+                    <button class="city" data-cityid="5">赛区E: 福州</button>
+                    <button class="city" data-cityid="6">赛区H: 福州</button>
+                    <button class="city" data-cityid="7">赛区C: 福州</button>
+                    <button class="city" data-cityid="8">赛区F: 福州</button>
+                    <button class="city" data-cityid="9">赛区J: 福州</button>
+
+
+                </div>
+
+                <div class="enter city-return"></div>
+
+           </div>
+
+
+
+           <!-- 城市排行榜 -->
+
+           <div class="rank-city">
+
+               <div class="title">请选择城市排行榜</div>
+
+               <div class="city-list">
+
+                   <button class="city" data-cityid="1">赛区A: 福州</button>
+
+
+               </div>
+
+               <div class="enter rank-return"></div>
+
+           </div>
+
+           <!-- 投票规则 -->
+
+            <div class="vote-rules">
+
+                <div class="title">投票规则</div>
+
+                <p align="left">
+                    1、选择城市并选中想要投票的作品进行投票；<br />
+                    2、每人每天限投2票；<br />
+                    3、投票时间：2018年7月2日 - 2018年 7月9日；<br />
+                    4、7月9日-7月10日将统计评分结果统计，公布各地市前三名优秀作品,
+                    邀请获奖消费者到各城市指定华为授权体验店领奖；<br />
+                    5、7月10日-7月17日分赛区优秀作品将上传至二轮投票平台进行投票；<br />
+                    6、邀请进入总决赛选手前往总决赛现场展示参赛作品。由省级摄影协会评审现场打分，
+                    综合线上得分，评出本次比赛前五名。<br />
+                </p>
+
+                <div class="enter rules-return"></div>
+
+            </div>
+
+           <!--奖项设置-->
+
+           <div class="award">
+
+               <div class="title">奖项设置</div>
+
+               <p>
+
+                   <span>分区赛奖项设置</span>
+
+                   一等奖（共10名）华为运动手环1个<br />
+                   二等奖（共10名）MateBook背鼠套装1套<br />
+                   三等奖（共10名) 耳唛音箱套装1套<br />
+
+               </p>
+
+               <div class="enter award-return"></div>
+
+           </div>
+
+
+       </section>
+
+
+       <section id="loading" style="display: none">
+           <div class="load">请在微信浏览器中打开</div>
+       </section>
+   </div>
+
+<div style="display:none"><script src="https://s19.cnzz.com/z_stat.php?id=1274064449&web_id=1274064449" language="JavaScript"></script></div>
+</body>
+</html>
